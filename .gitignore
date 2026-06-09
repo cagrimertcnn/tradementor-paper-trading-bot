@@ -1,0 +1,39 @@
+# Python
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+
+# Virtual environments
+venv/
+.venv/
+env/
+
+# Secrets and environment files
+.env
+.env.*
+!.env.example
+
+# Runtime data and logs
+data/
+*.log
+*.jsonl
+*.sqlite
+*.db
+
+# OS / editor
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
+
+# Local installers / binaries
+cloudflared.rpm
+*.rpm
+*.deb
+
+# Screenshots temp
+screenshots/raw/
