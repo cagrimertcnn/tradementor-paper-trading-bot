@@ -188,18 +188,29 @@ RR_TARGET=1.5
 
 ## Screenshots
 
-Screenshots will be added under the `screenshots/` directory.
+### FastAPI Status Endpoint
 
-Planned screenshots:
+![FastAPI status endpoint](screenshots/01-fastapi-status.png)
 
-* running FastAPI server status,
-* filtered signal engine terminal,
-* paper trade log,
-* trade report output,
-* optimizer output,
-* active Linux processes.
+### Filtered Signal Engine
 
----
+![Filtered signal engine running](screenshots/02-signal-engine-running.png)
+
+### Trade Manager Closing a Paper Trade
+
+![Trade manager closing paper trade](screenshots/03-trade-manager-running.png)
+
+### Active Linux Processes
+
+![Active Linux processes](screenshots/04-active-processes.png)
+
+### Strategy Optimizer Results
+
+![Optimizer results](screenshots/05-optimizer-results.png)
+
+### Paper Trade Logs
+
+![Paper trade logs](screenshots/06-paper-trades.png)
 
 ## Important Disclaimer
 
