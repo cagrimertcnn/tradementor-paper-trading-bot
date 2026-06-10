@@ -186,6 +186,140 @@ RR_TARGET=1.5
 
 ---
 
+## Quick Start
+
+> This project is designed for local paper-trading and educational system-design purposes only.  
+> It does not execute real trades and does not provide financial advice.
+
+### 1. Clone the repository
+
+~~~bash
+git clone https://github.com/cagrimertcnn/tradementor-paper-trading-bot.git
+cd tradementor-paper-trading-bot
+~~~
+
+### 2. Create and activate a Python virtual environment
+
+~~~bash
+python3 -m venv venv
+source venv/bin/activate
+~~~
+
+### 3. Install dependencies
+
+~~~bash
+pip install -r requirements.txt
+~~~
+
+### 4. Create local environment configuration
+
+~~~bash
+cp .env.example .env
+~~~
+
+Edit `.env` and set your local configuration values.
+
+### 5. Start the FastAPI webhook server
+
+~~~bash
+uvicorn scripts.webhook_server:app --host 127.0.0.1 --port 8000 --reload
+~~~
+
+Health/status endpoint:
+
+~~~bash
+curl http://127.0.0.1:8000/
+~~~
+
+Paper trade logs endpoint:
+
+~~~bash
+curl http://127.0.0.1:8000/trades
+~~~
+
+### 6. Start the filtered signal engine
+
+Open a second terminal:
+
+~~~bash
+source venv/bin/activate
+python scripts/filtered_signal_engine.py
+~~~
+
+### 7. Start the trade manager
+
+Open a third terminal:
+
+~~~bash
+source venv/bin/activate
+python scripts/trade_manager.py
+~~~
+
+The system should now run with three local processes:
+
+~~~text
+FastAPI webhook server
+Filtered signal engine
+Trade manager
+~~~
+
+### 8. Run backtesting and optimization
+
+Backtest:
+
+~~~bash
+python scripts/backtest_filtered.py
+~~~
+
+Optimizer:
+
+~~~bash
+python scripts/optimizer.py
+~~~
+
+## What This Project Demonstrates
+
+This project was built as a practical portfolio project for Linux, Python automation and DevOps-style system design.
+
+It demonstrates:
+
+- building a local API service with FastAPI,
+- working with environment-based configuration,
+- separating secrets from source code,
+- consuming live market data through WebSocket streams,
+- validating incoming trading signals,
+- managing paper trades with risk limits,
+- logging trade events for later analysis,
+- running backtests and parameter optimization,
+- documenting architecture and operational behavior,
+- using Git and GitHub for version control and project presentation.
+
+The goal is not to claim trading profitability.  
+The goal is to show the ability to design, implement, run and document a real automation system on Linux.
+
+## Operational Notes
+
+In the current local setup, the application is run manually in separate terminal sessions.
+
+A more production-like deployment could include:
+
+- Dockerizing each component,
+- running services with Docker Compose,
+- adding structured logging,
+- adding monitoring and alerting,
+- storing trades in SQLite/PostgreSQL instead of JSONL files,
+- adding unit tests for signal validation and risk controls,
+- using systemd services or containers for process supervision,
+- adding CI checks with GitHub Actions.
+
+## Limitations
+
+This is a paper-trading project and should not be used for live trading without additional testing, security hardening and risk review.
+
+Backtesting can overfit historical data.  
+Forward paper testing is required before making any real-world decision.
+
+
 ## Screenshots
 
 ### FastAPI Status Endpoint
