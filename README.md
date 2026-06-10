@@ -10,14 +10,14 @@ A Linux-based automated paper trading system built with **Python**, **FastAPI**,
 
 The goal of this project was to build a real-world automation system that combines:
 
-* live market data processing,
-* API/webhook communication,
-* risk validation,
-* background process management,
-* JSON-based logging,
-* strategy backtesting,
-* parameter optimization,
-* Linux-based service workflow.
+- live market data processing,
+- API/webhook communication,
+- risk validation,
+- background process management,
+- JSON-based logging,
+- strategy backtesting,
+- parameter optimization,
+- Linux-based service workflow.
 
 Instead of only following tutorials, I wanted to build a working system end-to-end and document how the components communicate with each other.
 
@@ -25,7 +25,7 @@ Instead of only following tutorials, I wanted to build a working system end-to-e
 
 ## System Architecture
 
-```text
+~~~text
 Binance WebSocket Market Data
         |
         v
@@ -45,7 +45,7 @@ Trade Manager
         |
         v
 TP / SL Close Tracking
-```
+~~~
 
 ---
 
@@ -59,16 +59,16 @@ A FastAPI service that receives trade signals, validates them and logs accepted 
 
 It checks:
 
-* webhook secret,
-* allowed symbols,
-* trade direction,
-* entry / stop / take-profit values,
-* max risk per trade,
-* max daily trades,
-* max open trades,
-* max daily loss,
-* max daily stop-loss count,
-* risk/reward ratio.
+- webhook secret,
+- allowed symbols,
+- trade direction,
+- entry / stop / take-profit values,
+- max risk per trade,
+- max daily trades,
+- max open trades,
+- max daily loss,
+- max daily stop-loss count,
+- risk/reward ratio.
 
 ---
 
@@ -80,11 +80,11 @@ A market-data engine that listens to Binance candlestick data and generates pape
 
 Current filters include:
 
-* SMA fast / slow trend filter,
-* RSI range filter,
-* ATR-based stop-loss,
-* configurable risk/reward target,
-* cooldown after signals.
+- SMA fast / slow trend filter,
+- RSI range filter,
+- ATR-based stop-loss,
+- configurable risk/reward target,
+- cooldown after signals.
 
 ---
 
@@ -94,15 +94,15 @@ Current filters include:
 
 Tracks open paper trades and closes them when price reaches:
 
-* stop-loss,
-* take-profit.
+- stop-loss,
+- take-profit.
 
 It updates the trade log with:
 
-* close time,
-* close price,
-* close reason,
-* PnL percentage.
+- close time,
+- close price,
+- close reason,
+- PnL percentage.
 
 ---
 
@@ -112,14 +112,14 @@ It updates the trade log with:
 
 Generates a quick performance summary:
 
-* total trades,
-* closed trades,
-* open trades,
-* winning trades,
-* losing trades,
-* win rate,
-* total paper PnL,
-* latest trade results.
+- total trades,
+- closed trades,
+- open trades,
+- winning trades,
+- losing trades,
+- win rate,
+- total paper PnL,
+- latest trade results.
 
 ---
 
@@ -137,52 +137,26 @@ Runs the strategy on historical Binance candlestick data and estimates past perf
 
 Tests multiple parameter combinations and ranks strategy configurations based on:
 
-* estimated PnL,
-* win rate,
-* trade count,
-* max losing streak,
-* risk/reward setup.
+- estimated PnL,
+- win rate,
+- trade count,
+- max losing streak,
+- risk/reward setup.
 
 ---
 
 ## Tech Stack
 
-* Fedora Linux
-* Python
-* FastAPI
-* Uvicorn
-* Binance REST API
-* Binance WebSocket stream
-* JSONL logging
-* dotenv configuration
-* CLI-based process workflow
-
----
-
-## Example Runtime Processes
-
-The system is designed to run as three separate processes:
-
-```bash
-uvicorn scripts.webhook_server:app --host 127.0.0.1 --port 8000 --reload
-python scripts/filtered_signal_engine.py
-python scripts/trade_manager.py
-```
-
----
-
-## Example Risk Settings
-
-```env
-PAPER_MODE=true
-MAX_RISK_PERCENT=0.5
-MAX_DAILY_TRADES=3
-MAX_OPEN_TRADES=1
-MAX_DAILY_LOSS_PERCENT=1.0
-MAX_DAILY_STOP_LOSSES=2
-SIGNAL_RISK_PERCENT=0.25
-RR_TARGET=1.5
-```
+- Fedora Linux
+- Python
+- FastAPI
+- Uvicorn
+- Binance REST API
+- Binance WebSocket stream
+- JSONL logging
+- dotenv configuration
+- CLI-based process workflow
+- Git / GitHub
 
 ---
 
@@ -277,48 +251,34 @@ Optimizer:
 python scripts/optimizer.py
 ~~~
 
-## What This Project Demonstrates
+---
 
-This project was built as a practical portfolio project for Linux, Python automation and DevOps-style system design.
+## Example Runtime Processes
 
-It demonstrates:
+The system is designed to run as three separate processes:
 
-- building a local API service with FastAPI,
-- working with environment-based configuration,
-- separating secrets from source code,
-- consuming live market data through WebSocket streams,
-- validating incoming trading signals,
-- managing paper trades with risk limits,
-- logging trade events for later analysis,
-- running backtests and parameter optimization,
-- documenting architecture and operational behavior,
-- using Git and GitHub for version control and project presentation.
+~~~bash
+uvicorn scripts.webhook_server:app --host 127.0.0.1 --port 8000 --reload
+python scripts/filtered_signal_engine.py
+python scripts/trade_manager.py
+~~~
 
-The goal is not to claim trading profitability.  
-The goal is to show the ability to design, implement, run and document a real automation system on Linux.
+---
 
-## Operational Notes
+## Example Risk Settings
 
-In the current local setup, the application is run manually in separate terminal sessions.
+~~~env
+PAPER_MODE=true
+MAX_RISK_PERCENT=0.5
+MAX_DAILY_TRADES=3
+MAX_OPEN_TRADES=1
+MAX_DAILY_LOSS_PERCENT=1.0
+MAX_DAILY_STOP_LOSSES=2
+SIGNAL_RISK_PERCENT=0.25
+RR_TARGET=1.5
+~~~
 
-A more production-like deployment could include:
-
-- Dockerizing each component,
-- running services with Docker Compose,
-- adding structured logging,
-- adding monitoring and alerting,
-- storing trades in SQLite/PostgreSQL instead of JSONL files,
-- adding unit tests for signal validation and risk controls,
-- using systemd services or containers for process supervision,
-- adding CI checks with GitHub Actions.
-
-## Limitations
-
-This is a paper-trading project and should not be used for live trading without additional testing, security hardening and risk review.
-
-Backtesting can overfit historical data.  
-Forward paper testing is required before making any real-world decision.
-
+---
 
 ## Screenshots
 
@@ -346,25 +306,58 @@ Forward paper testing is required before making any real-world decision.
 
 ![Paper trade logs](screenshots/06-paper-trades.png)
 
+---
+
+## What This Project Demonstrates
+
+This project was built as a practical portfolio project for Linux, Python automation and DevOps-style system design.
+
+It demonstrates:
+
+- building a local API service with FastAPI,
+- working with environment-based configuration,
+- separating secrets from source code,
+- consuming live market data through WebSocket streams,
+- validating incoming trading signals,
+- managing paper trades with risk limits,
+- logging trade events for later analysis,
+- running backtests and parameter optimization,
+- documenting architecture and operational behavior,
+- using Git and GitHub for version control and project presentation.
+
+The goal is not to claim trading profitability.  
+The goal is to show the ability to design, implement, run and document a real automation system on Linux.
+
+---
+
+## Operational Notes
+
+In the current local setup, the application is run manually in separate terminal sessions.
+
+A more production-like deployment could include:
+
+- Dockerizing each component,
+- running services with Docker Compose,
+- adding structured logging,
+- adding monitoring and alerting,
+- storing trades in SQLite/PostgreSQL instead of JSONL files,
+- adding unit tests for signal validation and risk controls,
+- using systemd services or containers for process supervision,
+- adding CI checks with GitHub Actions.
+
+---
+
+## Limitations
+
+This is a paper-trading project and should not be used for live trading without additional testing, security hardening and risk review.
+
+Backtesting can overfit historical data.  
+Forward paper testing is required before making any real-world decision.
+
+---
+
 ## Important Disclaimer
 
 This project is for educational and paper-trading purposes only.
 
 It does not provide financial advice, does not guarantee profit and should not be used for live trading without extensive testing, monitoring and risk controls.
-
----
-
-## What This Project Demonstrates
-
-This project demonstrates hands-on experience with:
-
-* Linux terminal workflow,
-* Python scripting,
-* API service design,
-* webhook-based automation,
-* live data streaming,
-* risk management logic,
-* background process management,
-* logging and reporting,
-* backtesting and optimization,
-* building and documenting an end-to-end automation system.
